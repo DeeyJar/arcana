@@ -56,7 +56,7 @@ Consultar elemento
 | `.union(other)` | Combina dos filtros compatibles (OR a nivel de bits) |
 | `.intersection(other)` | Intersección entre dos filtros compatibles |
 
-> Métodos obtenidos de la [documentación de python](https://github.com/joseph-fox/python-bloomfilter), ya que puede variar en nombres para otros lenguajes de programación
+> Métodos obtenidos de la documentación de python<sup>[5](#bib5)</sup>, ya que puede variar en nombres para otros lenguajes de programación
 
 ### Complejidad
 
@@ -218,7 +218,7 @@ A medida que se insertan más elementos de los previstos, se activan más bits y
 
 ## 6. Referencias y recursos
 
-## Referencias bibliográficas
+### Referencias bibliográficas
 
 1. Amazon Web Services (AWS). *Implement fast, space-efficient lookups using Bloom filters in Amazon ElastiCache*. AWS Database Blog. https://aws.amazon.com/es/blogs/database/implement-fast-space-efficient-lookups-using-bloom-filters-in-amazon-elasticache/.
 
@@ -228,7 +228,7 @@ A medida que se insertan más elementos de los previstos, se activan más bits y
 
 4. AlgoMaster. *Bloom Filters | System Design*. AlgoMaster. https://algomaster.io/learn/system-design/bloom-filters.
 
-5. Python Land. *Bloom Filter in Python: Test If An Element is Part of a Large Set*. Python Land Blog. Publicado el 24 de junio de 2024. https://python.land/bloom-filter
+5. <a id="bib5"></a> Python Land. *Bloom Filter in Python: Test If An Element is Part of a Large Set*. Python Land Blog. Publicado el 24 de junio de 2024. https://python.land/bloom-filter
 
 6. Llimllib. *Bloom Filters by Example*. https://llimllib.github.io/bloomfilter-tutorial/.
 
