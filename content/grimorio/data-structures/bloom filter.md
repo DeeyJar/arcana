@@ -16,23 +16,25 @@ Un **Bloom Filter** sirve para saber rápidamente si un elemento está dentro de
 
 ### Definición / propiedades
 
-Los filtros de Bloom son una estructura de datos probabilística que permite verificar la pertenencia de un elemento a un conjunto de forma eficiente en memoria. No almacena los elementos en sí, sino una representación compacta mediante un [[array|array]] de bits, por lo que puede dar falsos positivos, pero nunca falsos negativos. Tiene las siguientes propiedades: 
+Los filtros de Bloom son una estructura de datos probabilística que permite verificar la pertenencia de un elemento a un conjunto de forma eficiente en memoria. No almacena los elementos en sí, sino una representación compacta mediante un [[array|array]] de bits, por lo que puede dar falsos positivos, pero nunca falsos negativos.
 
-- **Tamaño (N)**: Cantidad de posiciones (bits) del array que representa el filtro. Un tamaño mayor reduce la tasa de falsos positivos, a costa de un mayor uso de memoria.
-- **Funciones de hash (K)**: Cantidad de funciones hash utilizadas para calcular las posiciones a marcar en el array al agregar un elemento. Cada función se aplica una vez por elemento, y cada resultado marca a "1" la posición correspondiente.
-- **Tasa de falsos positivos (Error rate)**: Probabilidad de que una consulta de pertenencia devuelva "el elemento podría existir" cuando en realidad nunca fue agregado. Ocurre porque las posiciones consultadas pueden haber sido marcadas por otros elementos. Nunca hay falsos negativos: si una posición es "0", el elemento definitivamente no fue agregado.
-- **Capacidad**: Cantidad de elementos que el filtro puede soportar antes de que la tasa de falsos positivos crezca por encima de lo aceptable. Agregar más elementos de los previstos originalmente degrada la precisión del filtro. Para aumentar la capacidad manteniendo una misma tasa de falsos positivos, es necesario agrandar el tamaño del array (N) y/o ajustar la cantidad de funciones de hash (K), lo que implica un mayor consumo de memoria.
+Sus principales propiedades son:
+
+- **Tamaño (N)**: Cantidad de bits del array. Un tamaño mayor reduce los falsos positivos, pero usa más memoria.
+- **Funciones de hash (K)**: Cantidad de funciones utilizadas para calcular qué posiciones del array marcar con "1" al agregar un elemento.
+- **Tasa de falsos positivos (Error rate)**: Probabilidad de indicar que un elemento podría existir cuando en realidad no fue agregado. Nunca hay falsos negativos.
+- **Capacidad**: Cantidad de elementos que puede soportar antes de que aumenten demasiado los falsos positivos. Si se supera, es necesario aumentar el tamaño del array y/o ajustar las funciones de hash.
 
 
 ### Representación
 
 Primero debemos inicializar el array para que tenga 0 en todas sus posiciones, luego insertamos un elemento:
 
-![](/attachments/grimorio/data-structures/bloom_filter_insert.svg)
+![Bloom filter - Insertar elemento](/attachments/grimorio/data-structures/bloom_filter_insert.svg)
 
 Consultar elemento 
 
-![](/attachments/grimorio/data-structures/bloom_filter_contain.svg)
+![Bloom filter - Consultar elemento](/attachments/grimorio/data-structures/bloom_filter_contain.svg)
 
 > Si todos los bits que apunta están en 1 podemos decir que posiblemente está en el conjunto, pero si algún bit está en 0 nos asegura que no está. 
 
@@ -64,9 +66,9 @@ Para esta estructura de datos, las operaciones no dependen de c (cantidad de ele
 
 | Operación | Peor caso | Caso promedio | Mejor caso |
 |---|---|---|---|
-| Inicialización | O(n) | O(n) | O(n) |
-| Inserción | O(k) | O(k) | O(k) |
-| Búsqueda | O(k) | O(k) | O(k) |
+| Inicialización | $O(n)$ | $O(n)$ | $O(n)$ |
+| Inserción | $O(k)$ | $O(k)$ | $O(k)$ |
+| Búsqueda | $O(k)$ | $O(k)$ | $O(k)$ |
 
 Donde: 
 - n = tamaño del arreglo de bits 
@@ -75,15 +77,15 @@ Donde:
 
 ### Detalles operativos
 
-- Inserción duplicada no se detecta: insertar el mismo elemento varias veces no genera error ni aviso, no hay forma de saber si un elemento "ya estaba" antes de insertarlo. El filtro no sirve para contar elementos únicos. 
+- **Inserción duplicada no se detecta:** Insertar el mismo elemento varias veces no genera error ni permite saber con seguridad si ya estaba. No sirve para contar elementos únicos.
 
-- Cada inserción degrada la precisión global: insertar un elemento nuevo aumenta ligeramente la probabilidad de falso positivo para todas las búsquedas futuras. 
+- **Cada inserción reduce la precisión:** Agregar elementos aumenta la probabilidad de falsos positivos.
 
-- La búsqueda nunca da un "sí" definitivo: solo "posiblemente sí" o "seguro no". Se usa como filtro previo, no como fuente de verdad. 
+- **La búsqueda no es definitiva:** Solo indica "posiblemente sí" o "seguro no". Se usa como filtro previo.
 
-- No hay eliminación en la versión clásica: borrar un bit a mano puede generar falsos negativos. La alternativa es el Counting Bloom Filter, con más espacio y riesgo de overflow. 
+- **No hay eliminación clásica:** Borrar bits puede generar falsos negativos. Para eliminar se usa un Counting Bloom Filter, que requiere más espacio.
 
-- El tamaño no es ajustable: si n resultó insuficiente, la tasa de error crece y no se puede agrandar sin recrear el filtro (lo cual requiere haber guardado los elementos originales en otro lado). 
+- **El tamaño no se puede ajustar:** Si n es insuficiente, aumentan la tasa de error y hay que recrear el filtro.
 
 ## 3. Implementación
 
@@ -126,11 +128,14 @@ class BloomFilter:
 
     def _posiciones(self, elemento):
         # k "hashes" simples: mismo hash, con distinta semilla
-        return [hash((elemento, i)) % self.tamaño for i in range(self.k)]
+        return [hash((elemento, i)) % self.tam for i in range(self.k)]
 
     def add(self, elemento):
-        for pos in self._posiciones(elemento):
+        posiciones = self._posiciones(elemento)
+        ya_estaba = all(self.bits[pos] == 1 for pos in posiciones)
+        for pos in posiciones:
             self.bits[pos] = 1
+        return ya_estaba
 
     def __contains__(self, elemento):
         return all(self.bits[pos] == 1 for pos in self._posiciones(elemento))
@@ -138,8 +143,9 @@ class BloomFilter:
 
 bf = BloomFilter(capacity=100, error_rate=0.01)
 
-bf.add("manzana")
-bf.add("banana")
+print(bf.add("manzana"))  # False (es nuevo)
+print(bf.add("manzana"))  # True (ya estaba, o falso positivo)
+print(bf.add("banana"))   # False (es nuevo)
 
 print("manzana" in bf)  # True (probablemente)
 print("pera" in bf)     # False
@@ -149,10 +155,10 @@ print("pera" in bf)     # False
 
 ### Casos de uso
 
-- **Filtro previo**: En los casos donde haya muchas consultas concurrentes, se utiliza el Bloom Filter para comprobar que la clave no esté y evitar consultar la caché, la base de datos o una API. Si indica que podría estar, se realiza la consulta real.
-- **Detecta nombres de usuario duplicados**: Para determinar si un nombre de usuario es nuevo o si ya existe, valida cuando intente registrarse con un nombre, verifica si el nombre de usuario puede que exista o no. 
-- **Detecta fraudes**: Detecta si una tarjeta de crédito está marcada como robada. Se usa un filtro que contenga tarjetas denunciadas como robadas y, cuando se use una tarjeta, verifica si pertenece al conjunto.  
-- **Filtra spam y contenido dañino**: Puedes usar filtros de Bloom para analizar el contenido en busca de posibles amenazas, materiales dañinos y spam. Para ello, crea un filtro que contenga URLs maliciosas, direcciones de correo electrónico de spam y números de teléfono de spam.
+- **Filtro previo**: Evita consultas innecesarias a la caché, base de datos o API. Si la clave podría existir, se realiza la consulta.
+- **Detecta nombres de usuario duplicados**: Verifica si un nombre de usuario podría existir antes de registrarlo.
+- **Detecta fraudes**: Comprueba si una tarjeta está dentro de un conjunto de tarjetas denunciadas como robadas.
+- **Filtra spam y contenido dañino**: Detecta posibles URLs, correos y números de teléfono asociados a spam o contenido dañino.
 
 ### Cuándo NO usarlo
 - Cuando se espera un resultado acertado sobre la existencia del elemento. 
@@ -199,37 +205,37 @@ Hay varias pistas en un problema que sugieren que un Bloom Filter puede ser la e
 
 #### **Persistencia**
 
-Para guardar un Bloom Filter y recuperarlo después, se deben persistir tanto el arreglo de bits como su configuración: tamaño, número de hashes, algoritmo de hash y versión del formato. 
+Se deben guardar el arreglo de bits y su configuración para poder recuperar el filtro después.
 
 
 #### **Hashes**
 
-Deben distribuir los elementos uniformemente para reducir colisiones y falsos positivos. 
+Deben distribuir bien los elementos para reducir colisiones y falsos positivos.
 
  
 #### **Concurrencia**
 
-Si varios hilos o procesos insertan elementos a la vez, las actualizaciones de bits deben ser seguras. En una implementación concurrente pueden requerirse operaciones atómicas, bloqueos o una estructura proporcionada por un sistema externo como Redis. 
+Las actualizaciones de bits deben ser seguras cuando varios hilos o procesos insertan elementos al mismo tiempo.
 
 
 #### **Saturación**
 
-A medida que se insertan más elementos de los previstos, se activan más bits y crece la tasa de falsos positivos. 
+Al superar la cantidad de elementos prevista, aumentan los bits activos y los falsos positivos.
 
 ## 6. Referencias y recursos
 
 ### Referencias bibliográficas
 
-1. Amazon Web Services (AWS). *Implement fast, space-efficient lookups using Bloom filters in Amazon ElastiCache*. AWS Database Blog. https://aws.amazon.com/es/blogs/database/implement-fast-space-efficient-lookups-using-bloom-filters-in-amazon-elasticache/.
+1. Amazon Web Services (AWS). *Implement fast, space-efficient lookups using Bloom filters in Amazon ElastiCache*. https://aws.amazon.com/es/blogs/database/implement-fast-space-efficient-lookups-using-bloom-filters-in-amazon-elasticache/.
 
-2. Fox, J. *python-bloomfilter: Scalable Bloom Filter implemented in Python*. GitHub. https://github.com/joseph-fox/python-bloomfilter.
+2. Fox, J. *python-bloomfilter: Scalable Bloom Filter implemented in Python*. https://github.com/joseph-fox/python-bloomfilter.
 
-3. Baeldung. *Bloom Filter in Java using Guava*. Baeldung. https://www.baeldung.com/guava-bloom-filter
+3. Baeldung. *Bloom Filter in Java using Guava*. https://www.baeldung.com/guava-bloom-filter
 
-4. AlgoMaster. *Bloom Filters | System Design*. AlgoMaster. https://algomaster.io/learn/system-design/bloom-filters.
+4. AlgoMaster. *Bloom Filters | System Design*. https://algomaster.io/learn/system-design/bloom-filters.
 
-5. <a id="bib5"></a> Python Land. *Bloom Filter in Python: Test If An Element is Part of a Large Set*. Python Land Blog. Publicado el 24 de junio de 2024. https://python.land/bloom-filter
+5. <a id="bib5"></a> Python Land. *Bloom Filter in Python: Test If An Element is Part of a Large Set*. https://python.land/bloom-filter
 
 6. Llimllib. *Bloom Filters by Example*. https://llimllib.github.io/bloomfilter-tutorial/.
 
-7. Google Cloud. *Acerca de los filtros de Bloom*. Memorystore for Valkey Documentation. https://docs.cloud.google.com/memorystore/docs/valkey/about-bloom-filters?hl=es-419.
+7. Google Cloud. *Acerca de los filtros de Bloom*. https://docs.cloud.google.com/memorystore/docs/valkey/about-bloom-filters?hl=es-419.
