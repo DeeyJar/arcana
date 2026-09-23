@@ -30,11 +30,11 @@ Sus principales propiedades son:
 
 Primero debemos inicializar el array para que tenga 0 en todas sus posiciones, luego insertamos un elemento:
 
-![Bloom filter - Insertar elemento](/attachments/grimorio/data-structures/bloom_filter_insert.svg)
+![[attachments/grimorio/data-structures/bloom_filter_insert.svg|Bloom filter - Insertar elemento|450]]
 
 Consultar elemento 
 
-![Bloom filter - Consultar elemento](/attachments/grimorio/data-structures/bloom_filter_contain.svg)
+![[attachments/grimorio/data-structures/bloom_filter_contain.svg|Bloom filter - Consultar elemento|450]]
 
 > Si todos los bits que apunta están en 1 podemos decir que posiblemente está en el conjunto, pero si algún bit está en 0 nos asegura que no está. 
 
