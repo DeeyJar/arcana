@@ -26,14 +26,14 @@ Enunciado original: OIA, Certamen Nacional 2008, Nivel 3, Problema 1 (`barrio`).
 
 ## Intuición
 
-En el enunciado original (sin cortes ni intensidades) la distancia entre dos esquinas es simplemente la distancia Manhattan, $|x_1 - x_2| + |y_1 - y_2|$. Las dos modificaciones rompen esa comodidad:
+En el enunciado original (sin cortes ni intensidades) la distancia entre dos esquinas es simplemente la distancia Manhattan, $|x_1 - x_2| + |y_1 - y_2|$. Las modificaciones agregan dos dificultades:
 
 - **Los cortes** hacen que la distancia deje de ser Manhattan: una esquina que parece cercana puede quedar lejos si hay que rodear una cuadra cortada. Ya no alcanza con una fórmula, hay que **recorrer** la ciudad como un [[graph]].
 - **Las intensidades** hacen que no todas las tumultuosas "pesen" igual: una con `v` alto molesta como si estuviera `v` cuadras más cerca.
 
 Una imagen que ayuda: cada esquina tumultuosa es un **incendio** que se propaga una cuadra por unidad de tiempo, pero no todos arrancan a la vez. El de intensidad `v` empezó `v` unidades de tiempo *antes*. La molestia de una esquina es el momento en que le llega el **primer** fuego, y el mejor barrio es la esquina que **se quema última**.
 
-El problema es un **maximin**: hay un mínimo adentro (la tumultuosa que más molesta a cada esquina) y un máximo afuera (la mejor esquina). Confundir el orden de esas dos operaciones es el error más común.
+El problema es un **maximin**: hay un mínimo adentro (la tumultuosa que más molesta a cada esquina) y un máximo afuera (la mejor esquina).
 
 ---
 
@@ -41,8 +41,8 @@ El problema es un **maximin**: hay un mínimo adentro (la tumultuosa que más mo
 
 **Entrada:**
 
-- Una línea con `M N K`: el tamaño de la cuadrícula y la cantidad de esquinas tumultuosas.
-- `K` líneas con `x y v`: coordenadas de una esquina tumultuosa (1 ≤ x ≤ M, 1 ≤ y ≤ N) y su intensidad.
+- Una línea con `M N K`: el tamaño de la cuadrícula (M, N) y la cantidad de esquinas tumultuosas (K).
+- `K` líneas con `x y v`: coordenadas de una esquina tumultuosa (1 ≤ x ≤ M, 1 ≤ y ≤ N) y su intensidad (v).
 - Una línea con `B`: la cantidad de cuadras cortadas.
 - `B` líneas con `x1 y1 x2 y2`: las dos esquinas vecinas que une cada cuadra cortada.
 
