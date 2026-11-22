@@ -153,43 +153,19 @@ Para resolver a mano usamos una instancia más chica: una cuadrícula de 5 × 4,
 - **B** = (4, 4) con intensidad 2.
 - Cuadras cortadas: entre (3, 2) y (4, 2), y entre (3, 4) y (4, 4).
 
-```
-y=4   ·───·───·   B───·
-      │   │   │   │   │
-y=3   ·───·───·───·───·
-      │   │   │   │   │
-y=2   ·───·───·   ·───·
-      │   │   │   │   │
-y=1   A───·───·───·───·
-     x=1 x=2 x=3 x=4 x=5
-```
+![[barrio_acotado.svg|Representacion cuidad con dos esquinas tumultuosas y dos cuadras cortadas|400]]
 
 **Molestia de A** (distancia desde A menos 0). Los cortes no alargan ningún camino desde A:
 
-| y \ x |  1 |  2 |  3 |  4 |  5 |
-|:-----:|---:|---:|---:|---:|---:|
-| **4** |  3 |  4 |  5 |  6 |  7 |
-| **3** |  2 |  3 |  4 |  5 |  6 |
-| **2** |  1 |  2 |  3 |  4 |  5 |
-| **1** |  0 |  1 |  2 |  3 |  4 |
+![[barrio_acotado_A.svg|Molestia de la esquina tumultuosa A en el ejemplo acotado|400]]
 
 **Molestia de B** (distancia desde B menos 2). El corte entre (3, 4) y (4, 4) obliga a B a bajar a la fila 3 para ir hacia el oeste, y el corte entre (3, 2) y (4, 2) lo obliga a rodear para llegar a la fila 2 del lado oeste:
 
-| y \ x |  1 |  2 |  3 |  4 |  5 |
-|:-----:|---:|---:|---:|---:|---:|
-| **4** |  3 |  2 |  1 | −2 | −1 |
-| **3** |  2 |  1 |  0 | −1 |  0 |
-| **2** |  3 |  2 |  1 |  0 |  1 |
-| **1** |  4 |  3 |  2 |  1 |  2 |
+![[barrio_acotado_B.svg|Molestia de la esquina tumultuosa B en el ejemplo acotado|400]]
 
 **Menor molestia de cada esquina** (mínimo celda a celda de las dos tablas):
 
-| y \ x |     1 |  2 |  3 |  4 |  5 |
-|:-----:|------:|---:|---:|---:|---:|
-| **4** | **3** |  2 |  1 | −2 | −1 |
-| **3** |     2 |  1 |  0 | −1 |  0 |
-| **2** |     1 |  2 |  1 |  0 |  1 |
-| **1** |     0 |  1 |  2 |  1 |  2 |
+![[barrio_acotado_minimo.svg|Menor molestia de cada esquina del ejemplo acotado|400]]
 
 El máximo es **3** y lo alcanza una sola esquina, **(1, 4)**. Por ejemplo, desde B hasta (1, 4) el camino más corto es (4, 4) → (4, 3) → (3, 3) → (3, 4) → (2, 4) → (1, 4): 5 cuadras, y 5 − 2 = 3. Desde A son 3 cuadras, y 3 − 0 = 3. El mínimo es 3.
 

@@ -91,12 +91,7 @@ Algunas cosas para notar en la traza:
 
 La molestia final de cada esquina es la misma que calcula la fuerza bruta:
 
-| y \ x |     1 |  2 |  3 |  4 |  5 |
-|:-----:|------:|---:|---:|---:|---:|
-| **4** | **3** |  2 |  1 | −2 | −1 |
-| **3** |     2 |  1 |  0 | −1 |  0 |
-| **2** |     1 |  2 |  1 |  0 |  1 |
-| **1** |     0 |  1 |  2 |  1 |  2 |
+![[barrio_acotado_minimo.svg|Menor molestia de cada esquina del ejemplo acotado|400]]
 
 **Resultado:** `(3, [(1, 4)])`, que se imprime como:
 

@@ -60,12 +60,7 @@ Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo acotado|ejemplo acot
 
 **Primera iteración: BFS desde A.** Ningún corte alarga un camino desde A, así que las distancias coinciden con la distancia Manhattan. Como `molestia` está vacío, queda igual a `d − 0`:
 
-| y \ x |  1 |  2 |  3 |  4 |  5 |
-|:-----:|---:|---:|---:|---:|---:|
-| **4** |  3 |  4 |  5 |  6 |  7 |
-| **3** |  2 |  3 |  4 |  5 |  6 |
-| **2** |  1 |  2 |  3 |  4 |  5 |
-| **1** |  0 |  1 |  2 |  3 |  4 |
+![[barrio_acotado_A.svg|Molestia de la esquina tumultuosa A en el ejemplo acotado|400]]
 
 **Segunda iteración: BFS desde B.** La cola procesa las esquinas por niveles de distancia:
 
@@ -81,21 +76,11 @@ Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo acotado|ejemplo acot
 
 Con esas distancias, `d − 2` da:
 
-| y \ x |  1 |  2 |  3 |  4 |  5 |
-|:-----:|---:|---:|---:|---:|---:|
-| **4** |  3 |  2 |  1 | −2 | −1 |
-| **3** |  2 |  1 |  0 | −1 |  0 |
-| **2** |  3 |  2 |  1 |  0 |  1 |
-| **1** |  4 |  3 |  2 |  1 |  2 |
+![[barrio_acotado_B.svg|Molestia de la esquina tumultuosa B en el ejemplo acotado|400]]
 
 y la actualización `min(actual, d − 2)` deja en `molestia`:
 
-| y \ x |     1 |  2 |  3 |  4 |  5 |
-|:-----:|------:|---:|---:|---:|---:|
-| **4** | **3** |  2 |  1 | −2 | −1 |
-| **3** |     2 |  1 |  0 | −1 |  0 |
-| **2** |     1 |  2 |  1 |  0 |  1 |
-| **1** |     0 |  1 |  2 |  1 |  2 |
+![[barrio_acotado_minimo.svg|Menor molestia de cada esquina del ejemplo acotado|400]]
 
 Por ejemplo, en (1, 2) A aporta 1 y B aporta 3, así que queda 1. En (1, 4) ambas aportan 3.
 
