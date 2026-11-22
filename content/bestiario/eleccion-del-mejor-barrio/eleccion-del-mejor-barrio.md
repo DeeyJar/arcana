@@ -10,6 +10,8 @@ Una persona se muda a otra ciudad y quiere comprar una vivienda en un barrio tra
 
 La ciudad tiene forma de cuadrícula de **M × N esquinas**. Se registró la esquina más cercana a cada actividad multitudinaria: son las **esquinas tumultuosas**.
 
+[Enunciado base original (PDF oficial OIA)](https://www.oia.unsam.edu.ar/_media/prob/c3a08n3p1.pdf)
+
 **Modificaciones respecto del enunciado original:**
 
 - Cada esquina tumultuosa tiene una **intensidad** `v` (0 ≤ v ≤ 1000).
