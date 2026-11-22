@@ -99,6 +99,45 @@ Salida esperada:
 
 ## Ejemplo concreto
 
+### Ejemplo del enunciado
+
+Resolvemos a mano el ejemplo oficial del enunciado: una ciudad de 10 × 8 esquinas con tres esquinas tumultuosas y cuatro cuadras cortadas.
+
+- **A** = (8, 5) con intensidad 2.
+- **B** = (1, 7) con intensidad 0.
+- **C** = (4, 2) con intensidad 5.
+- Cuadras cortadas: (7, 2)–(7, 3), (9, 5)–(10, 5), (9, 6)–(9, 7) y (8, 5)–(8, 6).
+
+Para cada tumultuosa se calcula la molestia sobre todas las esquinas: la distancia en cuadras (rodeando los cortes) menos su intensidad.
+
+**Molestia de A.** Arranca en −2 por su intensidad y crece de a una unidad por cuadra. Los cortes que la rodean la obligan a dar vueltas hacia el norte y hacia el este.
+
+![[barrio_modificado_A.svg|Molestia de la esquina tumultuosa A|500]]
+
+**Molestia de B.** Tiene intensidad 0, así que en su esquina vale 0 y no hay cortes cerca que alarguen sus caminos: coincide con la distancia Manhattan.
+
+![[barrio_modificado_B.svg|Molestia de la esquina tumultuosa B|500]]
+
+**Molestia de C.** Es la de mayor intensidad (5), por eso parte de −5 y molesta con fuerza a una zona grande de la ciudad. El corte (7, 2)–(7, 3) alarga algunos de sus caminos hacia el este.
+
+![[barrio_modificado_C.svg|Molestia de la esquina tumultuosa C|500]]
+
+**Menor molestia de cada esquina.** Se toma el mínimo celda a celda de las tres tablas: para cada esquina, la tumultuosa que más la molesta.
+
+![[barrio_modificado_minimo.svg|Menor molestia de cada esquina|500]]
+
+El máximo de esa tabla es **4** y lo alcanza una sola esquina, **(9, 8)**. En esa esquina las molestias son 4 (desde A, a 6 cuadras por los cortes), 9 (desde B) y 6 (desde C, a 11 cuadras), así que la peor es la de A.
+
+Salida:
+
+```
+4
+1
+9 8
+```
+
+### Ejemplo acotado
+
 Para resolver a mano usamos una instancia más chica: una cuadrícula de 5 × 4, con dos esquinas tumultuosas y dos cuadras cortadas.
 
 ```

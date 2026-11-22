@@ -56,7 +56,7 @@ Los cortes se arman a partir de la entrada como `cortes = {frozenset({(x1, y1), 
 
 ## Traza de ejemplo
 
-Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo concreto|ejemplo concreto]]: cuadrícula de 5 × 4, A = (1, 1) con v = 0, B = (4, 4) con v = 2, y cuadras cortadas entre (3, 2)–(4, 2) y entre (3, 4)–(4, 4).
+Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo acotado|ejemplo acotado]]: cuadrícula de 5 × 4, A = (1, 1) con v = 0, B = (4, 4) con v = 2, y cuadras cortadas entre (3, 2)–(4, 2) y entre (3, 4)–(4, 4).
 
 **Primera iteración: BFS desde A.** Ningún corte alarga un camino desde A, así que las distancias coinciden con la distancia Manhattan. Como `molestia` está vacío, queda igual a `d − 0`:
 

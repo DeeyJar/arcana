@@ -63,7 +63,7 @@ Una esquina puede entrar varias veces al heap (una por cada vecina que la alcanz
 
 ## Traza de ejemplo
 
-Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo concreto|ejemplo concreto]]: cuadrícula de 5 × 4, A = (1, 1) con v = 0, B = (4, 4) con v = 2, y cuadras cortadas entre (3, 2)–(4, 2) y entre (3, 4)–(4, 4).
+Usamos la instancia del [[eleccion-del-mejor-barrio#Ejemplo acotado|ejemplo acotado]]: cuadrícula de 5 × 4, A = (1, 1) con v = 0, B = (4, 4) con v = 2, y cuadras cortadas entre (3, 2)–(4, 2) y entre (3, 4)–(4, 4).
 
 Heap inicial: `(−2, (4, 4))` y `(0, (1, 1))`.
 
