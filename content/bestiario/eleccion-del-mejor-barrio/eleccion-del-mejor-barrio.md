@@ -154,7 +154,7 @@ Para resolver a mano usamos una instancia más chica: una cuadrícula de 5 × 4,
 - **B** = (4, 4) con intensidad 2.
 - Cuadras cortadas: entre (3, 2) y (4, 2), y entre (3, 4) y (4, 4).
 
-![[barrio_acotado.svg|Representacion cuidad con dos esquinas tumultuosas y dos cuadras cortadas|400]]
+![[barrio_acotado.svg|Representación de la ciudad con dos esquinas tumultuosas y dos cuadras cortadas|400]]
 
 **Molestia de A** (distancia desde A menos 0). Los cortes no alargan ningún camino desde A:
 
