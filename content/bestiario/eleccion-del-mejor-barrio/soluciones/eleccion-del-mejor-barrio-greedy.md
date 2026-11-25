@@ -38,6 +38,7 @@ En la imagen de los incendios: los fuegos se procesan en orden de llegada, y la 
 
 ```python
 import heapq
+import sys
 
 def vecinos(x, y, M, N, cortes):
     for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
@@ -58,9 +59,26 @@ def mejor_barrio(M, N, tumultuosas, cortes):
                 heapq.heappush(heap, (m + 1, w))
     maximo = max(molestia.values())
     return maximo, sorted(e for e, m in molestia.items() if m == maximo)
+
+def main():
+    datos = list(map(int, sys.stdin.read().split()))
+    M, N, K = datos[0], datos[1], datos[2]
+    tumultuosas = [tuple(datos[3 + 3 * i : 6 + 3 * i]) for i in range(K)]
+    pos = 3 + 3 * K
+    B = datos[pos]
+    cortes = {frozenset({(datos[j], datos[j + 1]), (datos[j + 2], datos[j + 3])})
+              for j in range(pos + 1, pos + 1 + 4 * B, 4)}
+    maximo, esquinas = mejor_barrio(M, N, tumultuosas, cortes)
+    salida = [str(maximo), str(len(esquinas))] + [f"{x} {y}" for x, y in esquinas]
+    print("\n".join(salida))
+
+if __name__ == "__main__":
+    main()
 ```
 
 Una esquina puede entrar varias veces al heap (una por cada vecina que la alcanza). Las copias sobrantes se descartan al salir. Si una esquina aparece repetida como tumultuosa, la de mayor intensidad sale primero y las demás se descartan, así que no hace falta tratar ese caso aparte.
+
+`main` lee la entrada con el formato del enunciado, arma el set de cortes y muestra la salida en el formato pedido. Para probarlo con el ejemplo: `python barrio.py < barrio.in`.
 
 ## Traza de ejemplo
 

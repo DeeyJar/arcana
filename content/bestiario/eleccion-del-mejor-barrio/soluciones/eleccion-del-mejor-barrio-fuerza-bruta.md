@@ -26,6 +26,7 @@ El algoritmo aplica la definición tal cual:
 ## Código
 
 ```python
+import sys
 from collections import deque
 
 def vecinos(x, y, M, N, cortes):
@@ -51,9 +52,24 @@ def mejor_barrio(M, N, tumultuosas, cortes):
             molestia[esquina] = min(molestia.get(esquina, float('inf')), d - v)
     maximo = max(molestia.values())
     return maximo, sorted(e for e, m in molestia.items() if m == maximo)
+
+def main():
+    datos = list(map(int, sys.stdin.read().split()))
+    M, N, K = datos[0], datos[1], datos[2]
+    tumultuosas = [tuple(datos[3 + 3 * i : 6 + 3 * i]) for i in range(K)]
+    pos = 3 + 3 * K
+    B = datos[pos]
+    cortes = {frozenset({(datos[j], datos[j + 1]), (datos[j + 2], datos[j + 3])})
+              for j in range(pos + 1, pos + 1 + 4 * B, 4)}
+    maximo, esquinas = mejor_barrio(M, N, tumultuosas, cortes)
+    salida = [str(maximo), str(len(esquinas))] + [f"{x} {y}" for x, y in esquinas]
+    print("\n".join(salida))
+
+if __name__ == "__main__":
+    main()
 ```
 
-Los cortes se arman a partir de la entrada como `cortes = {frozenset({(x1, y1), (x2, y2)}) for x1, y1, x2, y2 in cuadras}`.
+`main` lee la entrada con el formato del enunciado, arma el set de cortes y muestra la salida en el formato pedido. Para probarlo con el ejemplo: `python barrio.py < barrio.in`.
 
 ## Traza de ejemplo
 
