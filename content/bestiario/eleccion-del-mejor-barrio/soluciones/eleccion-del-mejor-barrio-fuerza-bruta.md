@@ -121,6 +121,14 @@ Cada BFS visita cada esquina una vez y revisa cada cuadra a lo sumo dos veces (u
 
 Con las cotas del problema son $10^5 \cdot 10^6 = 10^{11}$ operaciones: **inviable** para el peor caso.
 
+**Tiempos medidos.** Con este código en Python 3.12, sobre ciudades generadas al azar (intensidades entre 0 y 1000 y cuadras cortadas al azar):
+
+- 100 × 100 con K = 100: 2,3 s.
+- 100 × 100 con K = 1000: 23,8 s. Diez veces más tumultuosas, diez veces más tiempo, como predice $O(K \cdot M \cdot N)$.
+- 1000 × 1000: cada BFS tarda unos 3 s, así que con K = 100.000 serían unos 3,5 días.
+
+Los valores exactos dependen de la máquina, pero la proporción entre ellos no.
+
 ### Espacial
 
 $O(M \cdot N + B)$.
@@ -148,6 +156,7 @@ La [[eleccion-del-mejor-barrio-greedy|solución greedy]] (Dijkstra con varios or
 |:--|:--|:--|
 | Tiempo | $O(K \cdot M \cdot N)$ | $O((M \cdot N + K) \log(M \cdot N + K))$ |
 | Peor caso del problema | ~$10^{11}$ operaciones | ~$10^8$ operaciones |
+| Peor caso medido en Python | ~3,5 días (estimado a partir de un BFS) | 7,1 s |
 | Mejor caso | K = 1: un BFS, sin heap | Siempre paga el $\log$ del heap |
 | Facilidad de verificación | Directa, sigue la definición | Requiere justificar por qué la primera visita ya es la mínima |
 
