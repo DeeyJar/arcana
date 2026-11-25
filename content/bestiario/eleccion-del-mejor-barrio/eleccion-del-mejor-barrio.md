@@ -1,6 +1,7 @@
 ---
 title: 'Elección del mejor barrio'
 tags:
+  - oia
   - bestia
 ---
 

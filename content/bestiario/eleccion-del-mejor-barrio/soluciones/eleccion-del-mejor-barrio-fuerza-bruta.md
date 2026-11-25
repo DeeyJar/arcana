@@ -1,6 +1,7 @@
 ---
 title: 'Elección del mejor barrio - Fuerza Bruta'
 tags:
+  - oia
   - solucion
 ---
 

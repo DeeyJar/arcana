@@ -1,6 +1,7 @@
 ---
 title: 'Elección del mejor barrio - Greedy'
 tags:
+  - oia
   - solucion
 ---
 
